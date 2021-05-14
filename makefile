@@ -16,11 +16,13 @@ cHelloSrc = src/C/everybodySayHello.c
 
 finalApp = eveybodySayHello
 
-hello: ${cHelloSrc}
+hello : ${cHelloSrc}
 	gcc -o ${finalApp} ${cHelloSrc}
 
-.PHONY clean:
+.PHONY : clean
+clean :
 	rm -rf *.o
 
-.PHONY purge: clean
+.PHONY : purge
+purge : clean
 	rm -rf ${finalApp}
