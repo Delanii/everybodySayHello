@@ -1,2 +1,8 @@
+# C ignored files
+
 *.o
+
+# Rust ignored files
+
 *.lock
+src/Rust/*/target/
