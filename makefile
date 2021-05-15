@@ -28,7 +28,7 @@ cargoSrc = src/Rust/rust_hello_main_component/src/rust_hello_main_component.rs
 finalApp = everybodySayHello
 
 hello : ${cHelloSrc} rustHello
-	gcc -o ${finalApp} ${cHelloSrc} -L ${rustProjectDir}target/release -lrust_hello_main_component -Wall
+	gcc -o ${finalApp} ${cHelloSrc} -L ${rustProjectDir}target/release -lrust_hello_main_component -lpthread -ldl -Wall
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
