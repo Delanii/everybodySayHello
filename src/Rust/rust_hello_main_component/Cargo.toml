@@ -6,9 +6,10 @@ edition = "2018"
 
 [lib]
 name = "rust_hello_main_component"
-path = "src/librustHello.rs"
+path = "src/rust_hello_main_component.rs"
 crate-type = ["staticlib"] # cdylib for dynamically lined library
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+libc = "0.2.94"

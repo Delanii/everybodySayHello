@@ -6,3 +6,7 @@
 
 *.lock
 src/Rust/*/target/
+
+# Final compiled app
+#
+everybodySayHello
