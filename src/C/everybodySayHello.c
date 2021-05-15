@@ -7,11 +7,13 @@ int main(void) {
 
     // First say "Hello" from C itself:
 
-    printf("Hello from %s\n\n", langName);
+    printf("\nHello from %s!\n\n", langName);
 
     // Next goes Rust
 
     hello_from_rust();
+
+    printf("Done!\n");
 
     return 0;
 }
