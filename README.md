@@ -1,3 +1,18 @@
+# Overview
+
+This is very small, beginner level project to familiarize with techniques to embed programming languages in an C application, just printing message in terminal and exiting.
+
+# Planned laguages
+
+- C : as a base for application runtime
+- Rust : as first guess language and also platform to embed more languages:
+
+  - lua with `mlua`
+  
+- lua : embedded directly in C runtime and with Rust via `mlua` crate
+
+# Building
+
 How to build this repository:
 
 1. `make hello` builds binary `everybodySayHello`
