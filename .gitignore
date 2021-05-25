@@ -5,8 +5,12 @@
 # Rust ignored files
 
 *.lock
-src/Rust/*/target/
 
-# Final compiled app
+# Additional resources:
+
+resources/
+
+# Final compiled files
 #
+src/Rust/*/target/
 everybodySayHello
