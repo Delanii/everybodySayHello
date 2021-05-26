@@ -13,7 +13,11 @@ int main(void) {
 
     hello_from_rust();
 
-    printf("Done!\n");
+    // Third is lua, this time through Rust `mlua` crate
+
+    hello_from_lua_through_rust();
+
+    printf("\nDone!\n");
 
     return 0;
 }

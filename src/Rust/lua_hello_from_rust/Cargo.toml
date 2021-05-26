@@ -1,15 +1,16 @@
 [package]
-name = "rust_hello_main_component"
+name = "lua_hello_from_rust"
 version = "0.1.0"
 authors = ["Tomas Krulis <krulis.tomas.tk@gmail.com>"]
 edition = "2018"
 
 [lib]
-name = "rust_hello_main_component"
-path = "src/rust_hello_main_component.rs"
+name = "lua_hello_from_rust"
+path = "src/lua_hello_from_rust.rs"
 crate-type = ["cdylib"] # "cdylib" for dynamically linked library, "staticlib" for statically linked library
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 libc = "0.2.94"
+mlua = { version = "0.5.4", features = [ "lua54", "vendored" ] }

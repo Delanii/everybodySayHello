@@ -22,18 +22,34 @@ cargoMannifest = src/Rust/rust_hello_main_component/Cargo.toml
 cargoSrc = src/Rust/rust_hello_main_component/src/rust_hello_main_component.rs
 
 #############################
+# Lua make variables
+# ##########################
+
+luaProjectDir = src/Rust/lua_hello_from_rust/
+luaCargoMannifest = src/Rust/lua_hello_from_rust/Cargo.toml
+
+luaCargoSrc = src/Rust/lua_hello_from_rust/src/lua_hello_from_rust.rs
+
+#############################
 # Final App
 # ##########################
 
 finalApp = everybodySayHello
+# execution: LD_LIBRARY_PATH=src/Rust/lua_hello_from_rust/target/release:src/Rust/rust_hello_main_component/target/release ./everybodySayHello
 
-hello : ${cHelloSrc} rustHello
-	gcc -o ${finalApp} ${cHelloSrc} -L ${rustProjectDir}target/release -lrust_hello_main_component -lpthread -ldl -Wall
+hello : ${cHelloSrc} rustHello luaHello
+	gcc -o ${finalApp} ${cHelloSrc} -L ${rustProjectDir}target/release -L ${luaProjectDir}target/release -lrust_hello_main_component -llua_hello_from_rust -lpthread -ldl -Wall
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
 	cd ${rustProjectDir}
 	cargo build --lib --release
+	cd ../../..
+
+luaHello : ${luaCargoMannifest} ${luaCargoSrc}
+	cd ${luaProjectDir}
+	cargo build --lib --release
+	cd ../../..
 
 .PHONY : clean
 clean :
