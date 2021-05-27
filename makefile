@@ -35,7 +35,19 @@ luaCargoSrc = src/Rust/lua_hello_from_rust/src/lua_hello_from_rust.rs
 # ##########################
 
 finalApp = everybodySayHello
-# execution: LD_LIBRARY_PATH=src/Rust/lua_hello_from_rust/target/release:src/Rust/rust_hello_main_component/target/release ./everybodySayHello
+# execution: LD_LIBRARY_PATH=lib1:libs ./everybodySayHello
+# `LD_LIBRARY_PATH` can point to multiple directories
+
+# Just a convinience rule to have cleanLibs rule -- more organized makefile (I hope)
+.PHONY : release
+release : prepareRelease cleanLibs
+	echo "Release finished!"
+
+.PHONY : prepareRelease
+prepareRelease : hello clean
+	mkdir -p lib1 libs
+	scp ${rustProjectDir}/target/release/librust_hello_main_component.so lib1/librust_hello_main_component.so
+	scp ${luaProjectDir}/target/release/liblua_hello_from_rust.so libs/liblua_hello_from_rust.so
 
 hello : ${cHelloSrc} rustHello luaHello
 	gcc -o ${finalApp} ${cHelloSrc} -L ${rustProjectDir}target/release -L ${luaProjectDir}target/release -lrust_hello_main_component -llua_hello_from_rust -lpthread -ldl -Wall
@@ -55,6 +67,10 @@ luaHello : ${luaCargoMannifest} ${luaCargoSrc}
 clean :
 	rm -rf *.o
 
+.PHONY : cleanLibs
+cleanLibs : clean
+	rm -rf ${rustProjectDir}/target ${luaProjectDir}/target
+
 .PHONY : purge
-purge : clean
-	rm -rf ${finalApp} ${rustProjectDir}/target
+purge : cleanLibs
+	rm -rf lib1 libs ${finalApp}

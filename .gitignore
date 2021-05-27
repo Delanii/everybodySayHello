@@ -7,6 +7,11 @@
 *.lock
 src/Rust/*/target/
 
+# Libraries generated from compilation steps
+
+lib1/
+libs/
+
 # Final compiled app
 #
 everybodySayHello
