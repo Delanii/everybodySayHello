@@ -1,4 +1,4 @@
-use mlua::prelude::*;
+use std::fs;
 
 use mlua::{Function, Lua, Result};
 
@@ -12,6 +12,14 @@ pub unsafe extern "C" fn hello_from_lua_through_rust() -> Result<()> {
 
     let print: Function = globals.get("print")?;
     print.call::<_, ()>("Hello from lua (through Rust)! As a simple function.\n")?;
+
+   // Loading lua script file and printing its "Hello"
+
+   let filename = "scripts/hello.lua";
+   let script = fs::read_to_string(filename)
+                .expect("Error reading script file");
+
+   lua.load(&script).exec()?;
 
     Ok(())
 }

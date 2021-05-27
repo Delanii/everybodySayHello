@@ -6,6 +6,8 @@
 
 sourceDir = src
 
+scriptDir = scripts
+
 #############################
 # C make variables
 # ##########################
@@ -29,6 +31,8 @@ luaProjectDir = src/Rust/lua_hello_from_rust/
 luaCargoMannifest = src/Rust/lua_hello_from_rust/Cargo.toml
 
 luaCargoSrc = src/Rust/lua_hello_from_rust/src/lua_hello_from_rust.rs
+
+luaScriptFile = src/lua/hello.lua
 
 #############################
 # Final App
@@ -58,10 +62,12 @@ rustHello : ${cargoMannifest} ${cargoSrc}
 	cargo build --lib --release
 	cd ../../..
 
-luaHello : ${luaCargoMannifest} ${luaCargoSrc}
+luaHello : ${luaCargoMannifest} ${luaCargoSrc} ${luaScriptFile}
 	cd ${luaProjectDir}
 	cargo build --lib --release
 	cd ../../..
+	mkdir -p scripts
+	scp src/lua/hello.lua ${scriptDir}/hello.lua
 
 .PHONY : clean
 clean :

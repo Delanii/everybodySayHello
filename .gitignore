@@ -12,6 +12,10 @@ src/Rust/*/target/
 lib1/
 libs/
 
+# Scripts moved from source folders to more accessible location
+
+scripts/
+
 # Final compiled app
 #
 everybodySayHello
