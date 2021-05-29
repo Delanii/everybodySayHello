@@ -2,15 +2,26 @@
 
 *.o
 
+# Folder for small tests
+
+MWEs/
+
 # Rust ignored files
 
 *.lock
 
-# Additional resources:
+# Compiled files
 
-resources/
+# Libraries generated from compilation steps
 
-# Final compiled files
-#
 src/Rust/*/target/
+
+lib1/
+libs/
+
+# Scripts moved from source folders to more accessible location
+
+scripts/
+
+# Final compiled app
 everybodySayHello

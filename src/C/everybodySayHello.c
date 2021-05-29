@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 void extern hello_from_rust();
+void extern hello_from_lua_through_rust();
 
 int main(void) {
     char langName[] = "C";
@@ -13,7 +14,11 @@ int main(void) {
 
     hello_from_rust();
 
-    printf("Done!\n");
+    // Third is lua, this time through Rust `mlua` crate
+
+    hello_from_lua_through_rust();
+
+    printf("\nDone!\n");
 
     return 0;
 }
