@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 void extern hello_from_rust();
+void extern hello_from_lua_through_rust();
 
 int main(void) {
     char langName[] = "C";

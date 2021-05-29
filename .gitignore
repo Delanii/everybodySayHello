@@ -2,6 +2,10 @@
 
 *.o
 
+# Folder for small tests
+
+MWEs/
+
 # Rust ignored files
 
 *.lock
