@@ -13,4 +13,4 @@ crate-type = ["cdylib"] # "cdylib" for dynamically linked library, "staticlib" f
 
 [dependencies]
 libc = "0.2.94"
-mlua = { version = "0.5.4", features = [ "lua54", "vendored" ] } # sensible options are `lua54` and `luajit`
+mlua = { version = "0.5.4", features = [ "luajit", "vendored" ] } # sensible options are `lua54` and `luajit`

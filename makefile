@@ -32,7 +32,7 @@ luaCargoMannifest = src/Rust/lua_hello_from_rust/Cargo.toml
 
 luaCargoSrc = src/Rust/lua_hello_from_rust/src/lua_hello_from_rust.rs
 
-luaScriptFile = src/lua/hello.lua
+luaScriptFile = src/lua/helloLuajit.lua
 
 #############################
 # Final App
@@ -67,7 +67,7 @@ luaHello : ${luaCargoMannifest} ${luaCargoSrc} ${luaScriptFile}
 	cargo build --lib --release
 	cd ../../..
 	mkdir -p scripts
-	scp src/lua/hello.lua ${scriptDir}/hello.lua
+	scp ${luaScriptFile} ${scriptDir}/helloLuajit.lua
 
 .PHONY : clean
 clean :
