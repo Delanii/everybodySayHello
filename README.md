@@ -2,30 +2,34 @@
 
 This is very small, beginner level project to familiarize with techniques to embed programming languages in an C application, just printing message in terminal and exiting.
 
-# Planned laguages
+# Project layout
 
-- C : as a base for application runtime
-- Rust : as first guess language and also platform to embed more languages:
+This project is split into three directories:
 
-  - lua with `mlua`
-  
-- lua : embedded directly in C runtime and with Rust via `mlua` crate
+- `RustInterop`: binds Rust directly to C code as dynamically loaded library, then this rust binding is used to connect more languages, currently:
+
+  - luajit: with `mlua` crate
+  - python: with `py3o` crate
+
+- `DirectInterop`: all language interpreters are directly bound to C app via C API. All interpreters are also compiled from source
+
+  - luajit
+  - python
+
+- CLuaInterop: specific project to showcase embedding lua 5.4 into C app. System lua libraries are used (requires lua 5.4 preinstalled).
+
+# Planned languages
+
+- perl
+- java
+- clojure
+- guile
+- raku
+- cpp
+- haskell
+- ocaml
 
 # Building
 
 How to build this repository:
 
-1. `make hello` builds binary `everybodySayHello`
-2. depending to type of linking binary has to be executed:
-
-   - dynamic linking (in `src/Rust/rust_hello_main_component/Cargo.toml` is `crate-type` specified as `cdylib`):
-   
-     ```shell
-     LD_LIBRARY_PATH=/path/to/output/library/in/target/folder ./everybodySayHello
-     ```
-     
-   - static linking (in `src/Rust/rust_hello_main_component/Cargo.toml` is `crate-type` specified as `staticlib`)
-   
-     ```shell
-   ./everybodySayHello
-     ```

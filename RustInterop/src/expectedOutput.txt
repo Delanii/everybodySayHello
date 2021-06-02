@@ -1,0 +1,10 @@
+Hello from C!
+
+Hello from Rust!
+
+Hello from luajit (through Rust)! As a simple function.
+
+Hello from luajit (through Rust)! As lua function loaded from script file.
+
+
+Done!

@@ -1,27 +1,7 @@
-# C ignored files
+# Stuff to do
 
-*.o
+TODOs.org
 
-# Folder for small tests
+# Folder with small test
 
 MWEs/
-
-# Rust ignored files
-
-*.lock
-
-# Compiled files
-
-# Libraries generated from compilation steps
-
-src/Rust/*/target/
-
-lib1/
-libs/
-
-# Scripts moved from source folders to more accessible location
-
-scripts/
-
-# Final compiled app
-everybodySayHello
