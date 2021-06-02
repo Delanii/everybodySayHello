@@ -101,9 +101,9 @@ clean :
 	printf "\nCleaning build artifacts\n"
 	rm -rf *.o
 	rm -rf ${rustProjectDir}target/rls
-	rm -rf ${rustProjectDir}${cargoReleasePath}deps
+	rm -rf ${rustProjectDir}${cargoReleasePath}deps ${rustProjectDir}${cargoReleasePath}build
 	rm -rf ${luaProjectDir}target/rls
-	rm -rf ${luaProjectDir}${cargoReleasePath}deps
+	rm -rf ${luaProjectDir}${cargoReleasePath}deps ${luaProjectDir}${cargoReleasePath}build
 	rm -rf ${helloOutputFile}
 
 .PHONY : purge
