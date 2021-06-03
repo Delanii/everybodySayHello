@@ -60,45 +60,45 @@ finalApp = everybodySayHello
 
 .PHONY : release
 release : test clean
-	printf "\n\nRelease finished"
+	@printf "\n\nRelease finished"
 
 hello : ${cHelloSrc} rustHello luaHello
 	gcc -o ${finalApp} ${cHelloSrc} -L lib1 -L libs -lrust_hello_main_component -llua_hello_from_rust -lpthread -ldl -Wall
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
-	printf "\nEntering Rust project directory\n"
+	@printf "\nEntering Rust project directory\n"
 	cd ${rustProjectDir}
 	cargo build --lib --release
-	printf "\nLeaving Rust project directory\n"
+	@printf "\nLeaving Rust project directory\n"
 	cd ../../..
-	printf "\nCopying Rust library to lib1/ folder\n."
+	@printf "\nCopying Rust library to lib1/ folder\n."
 	${makeLibDirectories}
 	scp ${rustProjectDir}${cargoReleasePath}${rustLibName} lib1/${rustLibName}
 
 luaHello : ${luaCargoMannifest} ${luaCargoSrc} ${luaScriptFile}
-	printf "\nEntering lua project directory\n"
+	@printf "\nEntering lua project directory\n"
 	cd ${luaProjectDir}
 	cargo build --lib --release
-	printf "\nLeaving lua project directory\n"
+	@printf "\nLeaving lua project directory\n"
 	cd ../../..
-	printf "\nCopying lua library to libs/ folder\n"
+	@printf "\nCopying lua library to libs/ folder\n"
 	${makeLibDirectories}
 	scp ${luaProjectDir}${cargoReleasePath}${luaLibName} libs/${luaLibName}
-	printf "\nCopying lua script to scripts/ directory\n"
+	@printf "\nCopying lua script to scripts/ directory\n"
 	${makeScriptDirectory}
 	scp ${luaScriptFile} ${scriptDir}/helloLuajit.lua
 
 .PHONY : test
 test : hello
-	printf "\nRunning tests\n\n"
+	@printf "\nRunning tests\n\n"
 	LD_LIBRARY_PATH=lib1:libs ./everybodySayHello | tee ${helloOutputFile}
 	diff ${helloOutputFile} ${expectedOutputFile}
-	printf "\nTests succesfull\n"
+	@printf "\nTests succesfull\n"
 
 .PHONY : clean
 clean :
-	printf "\nCleaning build artifacts\n"
+	@printf "\nCleaning build artifacts\n"
 	rm -rf *.o
 	rm -rf ${rustProjectDir}target/rls
 	rm -rf ${rustProjectDir}${cargoReleasePath}deps ${rustProjectDir}${cargoReleasePath}build
