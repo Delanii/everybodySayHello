@@ -60,7 +60,7 @@ finalApp = everybodySayHello
 
 .PHONY : release
 release : test clean
-	@printf "\n\nRelease finished"
+	@printf "\n\nRelease finished!\n"
 
 hello : ${cHelloSrc} rustHello luaHello
 	gcc -o ${finalApp} ${cHelloSrc} -L lib1 -L libs -lrust_hello_main_component -llua_hello_from_rust -lpthread -ldl -Wall
