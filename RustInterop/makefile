@@ -26,6 +26,8 @@ cargoMannifest = src/Rust/rust_hello_main_component/Cargo.toml
 
 cargoSrc = src/Rust/rust_hello_main_component/src/rust_hello_main_component.rs
 
+cargoFlags = --lib --release
+
 cargoReleasePath = /target/release/
 
 rustLibName = librust_hello_main_component.so
@@ -69,7 +71,7 @@ hello : ${cHelloSrc} rustHello luaHello
 rustHello : ${cargoMannifest} ${cargoSrc}
 	@printf "\nEntering Rust project directory\n"
 	cd ${rustProjectDir}
-	cargo build --lib --release
+	cargo build ${cargoFlags}
 	@printf "\nLeaving Rust project directory\n"
 	cd ../../..
 	@printf "\nCopying Rust library to lib1/ folder\n."
@@ -79,7 +81,7 @@ rustHello : ${cargoMannifest} ${cargoSrc}
 luaHello : ${luaCargoMannifest} ${luaCargoSrc} ${luaScriptFile}
 	@printf "\nEntering lua project directory\n"
 	cd ${luaProjectDir}
-	cargo build --lib --release
+	cargo build ${cargoFlags}
 	@printf "\nLeaving lua project directory\n"
 	cd ../../..
 	@printf "\nCopying lua library to libs/ folder\n"
