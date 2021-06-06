@@ -1,0 +1,22 @@
+# C ignored files
+
+*.o
+
+# Rust ignored files
+
+*.lock
+
+# Compiled files
+
+# Libraries generated from compilation steps
+
+src/Rust/*/target/
+
+libs/
+
+# Scripts moved from source folders to more accessible location
+
+scripts/
+
+# Final compiled app
+everybodySayHello
