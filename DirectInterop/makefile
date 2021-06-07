@@ -107,7 +107,6 @@ luaHello : ${luaScriptFile} ${luajitEmbeddingSrc}
 	${makeScriptDir}
 	scp ${luaSrc}/${luaScript} ${scriptDir}/${luaScript}
 
-# Záolžka
 .PHONY : test
 test : hello
 	@printf "\nRunning tests\n\n"

@@ -9,6 +9,7 @@ int main() {
     // First say "Hello" from C itself:
 
     printf("\nHello from %s!\n\n", langName);
+    fflush(stdout); // Should print first message immediately, not after "Rust hello," as it happens when testing with make
 
     // Next goes Rust
 
