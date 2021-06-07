@@ -22,9 +22,9 @@ cSrcDir = src/C
 
 cHello = everybodySayHello.c
 
-CFLAGS = -Llibs -Wall -Werror -pedantic -g
+CFLAGS = -Llibs -Wall -Werror -pedantic
 CDYNLIBFLAGS = -shared -fpic
-CLIBS = -lpthread -ldl
+CLIBS = -ldl -lpthread
 
 #############################
 # Rust make variables
@@ -45,7 +45,7 @@ rustLibName = librust_hello.so
 # Lua make variables
 # ##########################
 
-luajitEmbeddingSrc = src/C/libluajitHello.c
+luajitEmbeddingSrc = src/C/libluajithello.c
 
 luajitSrc = src/lua/luajit
 luajitHeader = luajit.h
@@ -100,7 +100,7 @@ luaHello : ${luaScriptFile} ${luajitEmbeddingSrc}
 	scp ${luajitSrc}/src/${luajitHeader} ${headerDir}/${luajitHeader}
 	scp ${luajitSrc}/src/${luajitLib} ${libDir}/${luajitLib}
 	@printf "\nBuilding luaHello shared library.\n"
-	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} ${CLIBS} -lluajit -llua -lm -o ${luajitHelloLib} ${luajitEmbeddingSrc}
+	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} ${CLIBS} -llua -lluajit -lm -o ${luajitHelloLib} ${luajitEmbeddingSrc}
 	@printf "\nCopying lua hello library to libs/ folder\n"
 	mv ${luajitHelloLib} libs/${luajitHelloLib}
 	@printf "\nCopying lua script to scripts/ directory\n"

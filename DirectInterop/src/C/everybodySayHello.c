@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int extern hello_from_rust();
+int hello_from_rust();
 int hello_from_lua();
 
 int main() {
