@@ -69,21 +69,21 @@ hello : ${cHelloSrc} rustHello luaHello
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
-	@printf "\nEntering Rust project directory\n"
 	cd ${rustProjectDir}
+	@printf "\nEntered Rust project directory: ${PWD}\n"
 	cargo build ${cargoFlags}
-	@printf "\nLeaving Rust project directory\n"
 	cd ../../..
+	@printf "\nReturning to project main directory: ${PWD}\n"
 	@printf "\nCopying Rust library to lib1/ folder\n."
 	${makeLibDirectories}
 	scp ${rustProjectDir}${cargoReleasePath}${rustLibName} lib1/${rustLibName}
 
 luaHello : ${luaCargoMannifest} ${luaCargoSrc} ${luaScriptFile}
-	@printf "\nEntering lua project directory\n"
 	cd ${luaProjectDir}
+	@printf "\nEntered lua project directory: ${PWD}\n"
 	cargo build ${cargoFlags}
-	@printf "\nLeaving lua project directory\n"
 	cd ../../..
+	@printf "\nReturning to project main directory: ${PWD}\n"
 	@printf "\nCopying lua library to libs/ folder\n"
 	${makeLibDirectories}
 	scp ${luaProjectDir}${cargoReleasePath}${luaLibName} libs/${luaLibName}
