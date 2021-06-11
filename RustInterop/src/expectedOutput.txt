@@ -7,5 +7,6 @@ Hello from luajit (through Rust)! As a simple function.
 
 Hello from luajit (through Rust)! As lua function loaded from script file.
 
+Hello from Python (through Rust)! As Python a siple function.
 
 Done!
