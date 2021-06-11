@@ -16,8 +16,6 @@ This project is split into three directories:
   - luajit
   - python
 
-- CLuaInterop: specific project to showcase embedding lua 5.4 into C app. System lua libraries are used (requires lua 5.4 preinstalled).
-
 # Planned languages
 
 - perl
