@@ -57,6 +57,17 @@ luaSrc = src/lua
 luaScript = helloLuajit.lua
 
 #############################
+# Python make variables
+# ##########################
+
+pythonEmbeddingSrc = src/C/libpythonhello.c
+
+pythonHelloLib = libpythonhello.so
+
+pythonSrc = src/python
+pythonScript = helloPython.py
+
+#############################
 # Variables for tests
 # ##########################
 
@@ -74,8 +85,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
@@ -106,6 +117,16 @@ luaHello : ${luaScriptFile} ${luajitEmbeddingSrc}
 	@printf "\nCopying lua script to scripts/ directory\n"
 	${makeScriptDir}
 	scp ${luaSrc}/${luaScript} ${scriptDir}/${luaScript}
+
+pythonHello : ${pythonScriptFile} ${pythonEmbeddingSrc}
+	@printf "\nBuilding pythonHello shared library.\n"
+	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} $$(python3.9-config --cflags) ${CLIBS} -lm $$(python3.9-config --embed --ldflags) -o ${pythonHelloLib} ${pythonEmbeddingSrc} # --embed also adds -lpython3.9
+	@printf "\nCopying python hello library to libs/ folder\n"
+	${makeLibDir}
+	mv ${pythonHelloLib} libs/${pythonHelloLib}
+	@printf "\nCopying python script to scripts/ directory\n"
+	${makeScriptDir}
+	scp ${pythonSrc}/${pythonScript} ${scriptDir}/${pythonScript}
 
 .PHONY : test
 test : hello

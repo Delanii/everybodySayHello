@@ -2,6 +2,7 @@
 
 int hello_from_rust();
 int hello_from_lua();
+int hello_from_python();
 
 int main() {
     char langName[] = "C";
@@ -18,6 +19,8 @@ int main() {
     // Third is lua, this time through Rust `mlua` crate
 
     hello_from_lua();
+
+    hello_from_python();
 
     printf("\nDone!\n");
 
