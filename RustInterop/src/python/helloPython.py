@@ -1,1 +1,1 @@
-print("Hello from python through Rust as a message loaded from script file.")
+print("\nHello from Python (through Rust)! As Python function loaded from a script file.\n")

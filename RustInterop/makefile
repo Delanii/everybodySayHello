@@ -78,7 +78,7 @@ release : test clean
 	@printf "\n\nRelease finished!\n"
 
 hello : ${cHelloSrc} rustHello luaHello pythonHello
-	gcc -o ${finalApp} ${cHelloSrc} -L lib1 -L libs -lrust_hello_main_component -llua_hello_from_rust -lpython_hello_from_rust -lpthread -ldl -Wall -g
+	gcc -o ${finalApp} ${cHelloSrc} -L lib1 -L libs -lrust_hello_main_component -llua_hello_from_rust -lpython_hello_from_rust -lpthread -ldl -Wall
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 # $$(pkg-config --cflags python3) double dollar signs are used to escape pkg-config expression, which should find correct flags
 
@@ -116,7 +116,7 @@ pythonHello : ${pythonCargoMannifest} ${pythonCargoSrc} ${pythonScriptFile}
 	scp ${pythonProjectDir}${cargoReleasePath}${pythonLibName} libs/${pythonLibName}
 	@printf "\nCopying python script to scripts/ directory\n"
 	${makeScriptDirectory}
-	scp ${pythonScriptFile} ${scriptDir}/pythonHello.py
+	scp ${pythonScriptFile} ${scriptDir}/helloPython.py
 
 .PHONY : test
 test : hello
