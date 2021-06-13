@@ -68,6 +68,17 @@ pythonSrc = src/python
 pythonScript = helloPython.py
 
 #############################
+# Guile make variables
+# ##########################
+
+guileEmbeddingSrc = src/C/libguilehello.c
+
+guileHelloLib = libguilehello.so
+
+guileSrc = src/guile
+guileScript = helloGuile.scm
+
+#############################
 # Variables for tests
 # ##########################
 
@@ -85,8 +96,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
@@ -127,6 +138,16 @@ pythonHello : ${pythonScriptFile} ${pythonEmbeddingSrc}
 	@printf "\nCopying python script to scripts/ directory\n"
 	${makeScriptDir}
 	scp ${pythonSrc}/${pythonScript} ${scriptDir}/${pythonScript}
+
+guileHello : ${guileScriptFile} ${guileEmbeddingSrc}
+	@printf "\nbuilding guilehello shared library.\n"
+	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} $$(pkg-config guile-2.2 --cflags) ${CLIBS} -lm $$(pkg-config guile-2.2 --libs) -o ${guileHelloLib} ${guileEmbeddingSrc}
+	@printf "\nCopying guile hello library to libs/ folder\n"
+	${makeLibDir}
+	mv ${guileHelloLib} libs/${guileHelloLib}
+	@printf "\nCopying guile script to scripts/ directory\n"
+	${makeScriptDir}
+	scp ${guileSrc}/${guileScript} ${scriptDir}/${guileScript}
 
 .PHONY : test
 test : hello

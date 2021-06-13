@@ -6,5 +6,11 @@ Hello from Rust!
 Hello from luaJIT! As simple function.
 Hello from luaJIT! As lua function loaded from script file.
 
+Hello from Python! As simple function.
+
+Hello from Python (through Rust)! As Python function loaded from a script file.
+
+Hello from Guile! As simple function.
+Hello from Guile! As guile function loaded from script file.
 
 Done!

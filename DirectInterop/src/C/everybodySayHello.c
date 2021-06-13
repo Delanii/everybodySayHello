@@ -3,6 +3,7 @@
 int hello_from_rust();
 int hello_from_lua();
 int hello_from_python();
+int hello_from_guile();
 
 int main() {
     char langName[] = "C";
@@ -21,6 +22,8 @@ int main() {
     hello_from_lua();
 
     hello_from_python();
+
+    hello_from_guile();
 
     printf("\nDone!\n");
 
