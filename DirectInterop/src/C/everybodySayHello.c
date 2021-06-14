@@ -4,6 +4,7 @@ int hello_from_rust();
 int hello_from_lua();
 int hello_from_python();
 int hello_from_guile();
+int hello_from_perl();
 
 int main() {
     char langName[] = "C";
@@ -24,6 +25,8 @@ int main() {
     hello_from_python();
 
     hello_from_guile();
+
+    hello_from_perl();
 
     printf("\nDone!\n");
 
