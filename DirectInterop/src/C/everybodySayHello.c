@@ -17,18 +17,23 @@ int main() {
     // Next goes Rust
 
     hello_from_rust();
+    fflush(stdout);
 
     // Third is lua, this time through Rust `mlua` crate
 
     hello_from_lua();
+    fflush(stdout);
 
     hello_from_python();
+    fflush(stdout);
 
     hello_from_guile();
+    fflush(stdout);
 
     hello_from_perl();
+    fflush(stdout);
 
-    printf("\nDone!\n");
+    printf("\n\nDone!\n");
 
     return 0;
 }

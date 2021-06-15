@@ -13,7 +13,9 @@ SCM hello_from_guile(int argc, char ** argv) {
     char filename[] = "scripts/helloGuile.scm";
 
     scm_c_eval_string(code);           // this function evluates C-style defined string as Guile scheme code. Without C, it expects an SCM object.
-    scm_c_eval_string(newline);
+    scm_c_eval_string(newline);        // not working, probably because stdout does not pick this when it is in library ... ?
+
+    printf("\n");
 
     scm_c_primitive_load(filename);    // this function accepts path to file, again defined as a C string
 

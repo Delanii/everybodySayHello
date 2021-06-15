@@ -24,6 +24,8 @@ int hello_from_lua(int argc, char ** argv) {
         }
     }
 
+    printf("\n");
+
     if (luaL_loadfile(L, filename) == LUA_OK) {
         if (lua_pcall(L, 0, 0, 0) == LUA_OK) {
            lua_pop(L, lua_gettop(L));
