@@ -89,6 +89,14 @@ perlHelloLib = libperlhello.so
 perlSrc = src/perl
 perlScript = helloPerl.pl
 
+##############################
+# C++ make variables
+# ##########################
+
+cppEmbeddingSrc = src/Cpp/libcpphello.cpp
+
+cppHelloLib = libcpphello.so
+
 ############################
 # Variables for tests
 # ##########################
@@ -107,8 +115,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
@@ -119,7 +127,7 @@ rustHello : ${cargoMannifest} ${cargoSrc}
 	@printf "\nEntering project root directory: ${PWD}\n"
 	@printf "\nCopying Rust library to libs/ folder\n."
 	${makeLibDir}
-	scp ${rustProjectDir}${cargoReleasePath}${rustLibName} libs/${rustLibName}
+	scp ${rustProjectDir}${cargoReleasePath}${rustLibName} ${libDir}/${rustLibName}
 
 luaHello : ${luaScriptFile} ${luajitEmbeddingSrc}
 	@printf "\nBuilding luaJIT"
@@ -145,7 +153,7 @@ pythonHello : ${pythonScriptFile} ${pythonEmbeddingSrc}
 	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} $$(python3.9-config --cflags) ${CLIBS} -lm $$(python3.9-config --embed --ldflags) -o ${pythonHelloLib} ${pythonEmbeddingSrc} # --embed also adds -lpython3.9
 	@printf "\nCopying python hello library to libs/ folder\n"
 	${makeLibDir}
-	mv ${pythonHelloLib} libs/${pythonHelloLib}
+	mv ${pythonHelloLib} ${libDir}/${pythonHelloLib}
 	@printf "\nCopying python script to scripts/ directory\n"
 	${makeScriptDir}
 	scp ${pythonSrc}/${pythonScript} ${scriptDir}/${pythonScript}
@@ -155,7 +163,7 @@ guileHello : ${guileScriptFile} ${guileEmbeddingSrc}
 	gcc -Iheaders ${CDYNLIBFLAGS} ${CFLAGS} $$(pkg-config guile-2.2 --cflags) ${CLIBS} -lm $$(pkg-config guile-2.2 --libs) -o ${guileHelloLib} ${guileEmbeddingSrc}
 	@printf "\nCopying guile hello library to libs/ folder\n"
 	${makeLibDir}
-	mv ${guileHelloLib} libs/${guileHelloLib}
+	mv ${guileHelloLib} ${libDir}/${guileHelloLib}
 	@printf "\nCopying guile script to scripts/ directory\n"
 	${makeScriptDir}
 	scp ${guileSrc}/${guileScript} ${scriptDir}/${guileScript}
@@ -165,10 +173,17 @@ perlHello : ${perlScriptFile} ${perlEmbeddingSrc}
 	gcc ${CDYNLIBFLAGS} ${CFLAGS} ${CLIBS} -lm -o ${perlHelloLib} ${perlEmbeddingSrc} $$(perl -MExtUtils::Embed -e ccopts -e ldopts) # This is the only correct sequence of compilation flags, otherwise references are not found ...
 	@printf "\nCopying perl hello library to libs/ folder\n"
 	${makeLibDir}
-	mv ${perlHelloLib} libs/${perlHelloLib}
+	mv ${perlHelloLib} ${libDir}/${perlHelloLib}
 	@printf "\nCopying perl script to scripts/ directory\n"
 	${makeScriptDir}
 	scp ${perlSrc}/${perlScript} ${scriptDir}/${perlScript}
+
+cppHello : ${cppEmbeddingSrc}
+	@printf "\nBuilding cpphello shared library.\n"
+	g++ ${CDYNLIBFLAGS} -o ${cppHelloLib} ${cppEmbeddingSrc}
+	@printf "\nCopying cpp hello library to libs/ folder\n"
+	${makeLibDir}
+	mv ${cppHelloLib} ${libDir}/${cppHelloLib}
 
 .PHONY : test
 test : hello
@@ -189,4 +204,4 @@ clean :
 
 .PHONY : purge
 purge : clean
-	rm -rf libs headers scripts ${finalApp}
+	rm -rf ${libDir} ${headerDir} ${scriptDir} ${finalApp}

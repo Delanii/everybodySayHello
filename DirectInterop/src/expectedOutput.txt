@@ -11,13 +11,15 @@ Hello from Python! As simple function.
 
 Hello from Python! As Python function loaded from a script file.
 
-
-
 Hello from perl! As simple function.
+
 Hello from perl! As perl function loaded from script file.
 
 Hello from Guile! As simple function.
+
 Hello from Guile! As guile function loaded from script file.
+
+Hello from C++! As a simple function
 
 
 Done!

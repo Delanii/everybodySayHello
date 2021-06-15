@@ -5,6 +5,7 @@ int hello_from_lua();
 int hello_from_python();
 int hello_from_guile();
 int hello_from_perl();
+int hello_from_cpp();
 
 int main() {
     char langName[] = "C";
@@ -31,6 +32,9 @@ int main() {
     fflush(stdout);
 
     hello_from_perl();
+    fflush(stdout);
+
+    hello_from_cpp();
     fflush(stdout);
 
     printf("\n\nDone!\n");
