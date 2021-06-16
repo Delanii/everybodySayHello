@@ -7,6 +7,10 @@ int hello_from_guile();
 int hello_from_perl();
 int hello_from_cpp();
 
+void myForeignLibInit();
+void hello_from_haskell();
+void myForeignLibExit();
+
 int main() {
     char langName[] = "C";
 
@@ -36,6 +40,10 @@ int main() {
 
     hello_from_cpp();
     fflush(stdout);
+
+    myForeignLibInit();
+    hello_from_haskell();
+    myForeignLibExit();
 
     printf("\n\nDone!\n");
 

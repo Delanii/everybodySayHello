@@ -97,6 +97,21 @@ cppEmbeddingSrc = src/Cpp/libcpphello.cpp
 
 cppHelloLib = libcpphello.so
 
+##############################
+# Haskell make variables
+# ##########################
+
+haskellProjectDir = src/Haskell
+
+haskellEmbeddingSrc = src/Haskell/src/HaskellHello.hs
+haskellEmbeddingWrapper = src/Haskell/src/wrapper.c
+
+cabalSettings = src/Haskell/HaskellHello.cabal
+cabalTargetDir = src/Haskell/dist-newstyle/build/x86_64-linux/ghc-8.10.5/HaskellHello-0.1.0.0/f/haskellhello/build/haskellhello
+haskellTargetLib = libhaskellhello.so.0.0.1
+
+haskellHelloLib = libhaskellhello.so.0
+
 ############################
 # Variables for tests
 # ##########################
@@ -115,8 +130,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello haskellHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -l:libhaskellhello.so.0 -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
@@ -185,6 +200,16 @@ cppHello : ${cppEmbeddingSrc}
 	${makeLibDir}
 	mv ${cppHelloLib} ${libDir}/${cppHelloLib}
 
+haskellHello : ${haskellEmbeddingSrc} ${haskellEmbeddingWrapper} ${cabalSettings}
+	cd ${haskellProjectDir}
+	@printf "\nEntered HaskellHello project directory ${PWD}"
+	cabal build
+	@printf "\nReturning to project root directory ${PWD}"
+	cd ../..
+	@printf "\nCopying haskell hello library to libs/ folder\n"
+	${makeLibDir}
+	scp ${cabalTargetDir}/${haskellTargetLib} ${libDir}/${haskellHelloLib}
+
 .PHONY : test
 test : hello
 	@printf "\nRunning tests\n\n"
@@ -200,6 +225,7 @@ clean :
 	rm -rf ${rustProjectDir}${cargoReleasePath}deps ${rustProjectDir}${cargoReleasePath}build
 	rm -rf ${luaProjectDir}target/rls
 	rm -rf ${luaProjectDir}${cargoReleasePath}deps ${luaProjectDir}${cargoReleasePath}build
+	rm -rf ${haskellProjectDir}/dist-newstyle
 	rm -rf ${helloOutputFile}
 
 .PHONY : purge
