@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "HsFFI.h"
 
-HsBool myForeignLibInit(void){
+HsBool haskellHelloLibInit(void){
   int argc = 2;
   char *argv[] = { "+RTS", "-A32m", NULL };
   char **pargv = argv;
@@ -14,8 +14,6 @@ HsBool myForeignLibInit(void){
   return HS_BOOL_TRUE;
 }
 
-hello_from_haskell();
-
-void myForeignLibExit(void){
+void haskellHelloLibExit(void){
   hs_exit();
 }

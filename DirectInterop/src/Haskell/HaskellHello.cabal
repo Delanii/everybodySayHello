@@ -25,6 +25,8 @@ foreign-library haskellhello
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
+    -- confusingly, `other-modules` refers to modules that are exposed from haskell code via c wrapper to interface with from the shared library. Otherwise, it doesnt work.
+    other-modules:    HaskellHello
     build-depends:    base ^>=4.14.2.0,
                       haskell-say ^>=1.0.0.0
     hs-source-dirs:   src

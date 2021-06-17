@@ -11,6 +11,7 @@
 # Libraries generated from compilation steps
 
 src/Rust/*/target/
+src/Haskell/dist-newstyle/
 
 libs/
 
