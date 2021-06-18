@@ -239,6 +239,7 @@ javaHello : ${javaProjectDir}/${javaHelloClass} ${javaProjectDir}/${javaVMInit}
 test : hello
 	@printf "\nRunning tests\n\n"
 	LD_LIBRARY_PATH=libs:${openjdkFolder}/lib/server ./everybodySayHello | tee ${helloOutputFile}
+# LD_LIBRARY_PATH=libs:/usr/lib/jvm/java-15-openjdk/lib/server ./everybodySayHello
 	diff ${helloOutputFile} ${expectedOutputFile}
 	@printf "\nTests succesfull\n"
 
