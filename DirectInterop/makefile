@@ -112,6 +112,19 @@ haskellTargetLib = libhaskellhello.so.0.0.1
 
 haskellHelloLib = libhaskellhello.so.0
 
+##############################
+# Java make variables
+# ##########################
+
+openjdkFolder = /usr/lib/jvm/java-15-openjdk
+
+javaProjectDir = src/Java
+
+javaHelloClass = helloJava.java
+javaVMInit = hello_from_java.c
+
+javaHelloLib = libjavahello.so
+
 ############################
 # Variables for tests
 # ##########################
@@ -130,8 +143,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello haskellHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -l:libhaskellhello.so.0 -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello haskellHello javaHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -l:libhaskellhello.so.0 -ljavahello -L${openjdkFolder}/lib/server/ -ljvm -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
@@ -210,10 +223,22 @@ haskellHello : ${haskellEmbeddingSrc} ${haskellEmbeddingWrapper} ${cabalSettings
 	${makeLibDir}
 	scp ${cabalTargetDir}/${haskellTargetLib} ${libDir}/${haskellHelloLib}
 
+javaHello : ${javaProjectDir}/${javaHelloClass} ${javaProjectDir}/${javaVMInit}
+	@printf "\nEntering Java project directory ${PWD}\n"
+	cd ${javaProjectDir}
+	javac ${javaHelloClass}
+	gcc -o ${javaHelloLib} -I${openjdkFolder}/include/ -I${openjdkFolder}/include/linux -L${openjdkFolder}/lib/server/ -ljvm ${CDYNLIBFLAGS} ${javaVMInit}
+	cd ../..
+	@printf "\nReturned to project root directory ${PWD}\n"
+	@printf "\nMoving Java hello lib to libs/ folder\n"
+	mv ${javaProjectDir}/${javaHelloLib} ${libDir}/${javaHelloLib}
+	@printf "\nMoving java hello class to libs/ directory\n"
+	mv ${javaProjectDir}/helloJava.class ${libDir}/helloJava.class
+
 .PHONY : test
 test : hello
 	@printf "\nRunning tests\n\n"
-	LD_LIBRARY_PATH=libs ./everybodySayHello | tee ${helloOutputFile}
+	LD_LIBRARY_PATH=libs:${openjdkFolder}/lib/server ./everybodySayHello | tee ${helloOutputFile}
 	diff ${helloOutputFile} ${expectedOutputFile}
 	@printf "\nTests succesfull\n"
 
@@ -227,6 +252,7 @@ clean :
 	rm -rf ${luaProjectDir}${cargoReleasePath}deps ${luaProjectDir}${cargoReleasePath}build
 	rm -rf ${haskellProjectDir}/dist-newstyle
 	rm -rf ${helloOutputFile}
+	rm -f ${javaProjectDir}/helloJava.class
 
 .PHONY : purge
 purge : clean

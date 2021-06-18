@@ -12,6 +12,7 @@
 
 src/Rust/*/target/
 src/Haskell/dist-newstyle/
+*.class
 
 libs/
 
