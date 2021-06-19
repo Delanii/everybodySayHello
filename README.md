@@ -15,17 +15,11 @@ This project is split into three directories:
 
   - luajit
   - python
-
-# Planned languages
-
-- perl
-- java
-- clojure
-- guile
-- raku
-- cpp
-- haskell
-- ocaml
+  - guile
+  - perl
+  - cpp
+  - haskell
+  - clojure
 
 # Building
 
