@@ -41,8 +41,8 @@ Hello from C++! As a simple function
    /    /  /    /   \    \
   /____/  /____/     \____\
 
-Launched JVM! :)
-Hello from Java. As a simple function.
+
+Hello from Clojure. As a simple function.
 
 
 Done!

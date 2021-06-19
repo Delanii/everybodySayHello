@@ -50,7 +50,7 @@ int main() {
     fflush(stdout);
 
     printf("\n");
-//    hello_from_java();
+//    hello_from_java(); // Even if I explicitly destroy JVM after calling hello_from_java, I still get segfault after calling (another, again initialized) JVM in hello_from_clojure. Since I care more for clojure, I am disabling hello_from_java for now.
 
     hello_from_clojure();
 

@@ -20,7 +20,7 @@ extern "C" int hello_from_clojure() {
     jmethodID var = env->GetStaticMethodID(Clojure, "var", "(Ljava/lang/Object;Ljava/lang/Object;)Lclojure/lang/IFn;");
     jobject load_string = env->CallStaticObjectMethod(Clojure, var, env->NewStringUTF("clojure.core"), env->NewStringUTF("load-string"));
     jmethodID load_string_invoke = env->GetMethodID(env->GetObjectClass(load_string), "invoke", "(Ljava/lang/Object;)Ljava/lang/Object;");
-    env->CallObjectMethod(load_string, load_string_invoke, env->NewStringUTF("(prn (+ 1 2 3 4 5))"));
+    env->CallObjectMethod(load_string, load_string_invoke, env->NewStringUTF("(println \"Hello from Clojure! As a simple function.\")"));
 
     jvm->DestroyJavaVM();
     return 0;

@@ -51,6 +51,7 @@ int hello_from_java(int argc, char **argv)
     if(env == NULL)
         return 1;
     invoke_class(env);
+    (*jvm)->DestroyJavaVM(jvm);
     return 0;
 }
 

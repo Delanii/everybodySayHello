@@ -153,8 +153,8 @@ finalApp = everybodySayHello
 release : test clean
 	@printf "\n\nRelease finished!\n"
 
-hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello haskellHello clojureHello
-	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -l:libhaskellhello.so.0 -lclojurehello -L${openjdkFolder}/lib/server/ -ljvm -o ${finalApp} ${cSrcDir}/${cHello}
+hello : ${cSrcDir}/${cHello} rustHello luaHello pythonHello guileHello perlHello cppHello haskellHello javaHello clojureHello
+	gcc ${CFLAGS} -lrust_hello -lluajithello -lpythonhello -lguilehello -lperlhello -lcpphello -lstdc++ -l:libhaskellhello.so.0 -ljavahello -lclojurehello -L${openjdkFolder}/lib/server/ -ljvm -o ${finalApp} ${cSrcDir}/${cHello}
 # linker prefers dynamic libraries, if `-static` is not given. it might not be needed now.
 
 rustHello : ${cargoMannifest} ${cargoSrc}
