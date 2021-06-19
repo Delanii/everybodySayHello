@@ -11,7 +11,8 @@ void haskellHelloLibInit();
 void hello_from_haskell();
 void haskellHelloLibExit();
 
-void hello_from_java();
+//void hello_from_java();
+void hello_from_clojure();
 
 int main() {
     char langName[] = "C";
@@ -49,7 +50,9 @@ int main() {
     fflush(stdout);
 
     printf("\n");
-    hello_from_java();
+//    hello_from_java();
+
+    hello_from_clojure();
 
     printf("\n\nDone!\n");
 

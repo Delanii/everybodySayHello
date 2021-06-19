@@ -20,5 +20,9 @@ libs/
 
 scripts/
 
+# Test output files
+
+helloOutput.txt
+
 # Final compiled app
 everybodySayHello
